@@ -1,4 +1,6 @@
 import random
+import time
+import copy
 
 from event import Event
 
@@ -56,11 +58,63 @@ class EventManager:
         for i in range(1,n): # start from the second element
             key = self.events[i] # position current element
             j = i-1 # index of the previous element
+            while j >= 0 and self.events[j].start_time > key.start_time:
+                self.events[j+1] = self.events[j] # shift the element to eht right
+                j -= 1 # move to the previous element
+            self.events[j+1] = key
 
-        while j >= 0 and self.events[j].start_time > key.start_time:
-            self.events[j+1] = self.events[j] # shift the element to eht right
-            j -= 1 # move to the previous element
-        self.events[j+1] = key
+    def bubbleSort(self):
+        """This function performs an in-place bubble sort of the events based on their start time"""
+        n = len(self.events)
+        for i in range(n):
+            for j in range(0, n-i-1):
+                if self.events[j].start_time > self.events[j+1].start_time:
+                    self.events[j], self.events[j+1] = self.events[j+1], self.events[j]
+
+    def quickSort(self):
+        """This function performs an in-place quick sort of the events based on their start time"""
+        self._quickSort(0, len(self.events) - 1)
+
+    def _quickSort(self, low, high):
+        if high - low < 10:  # Use insertion sort for small subarrays
+            self._insertionSort(low, high)
+            return
+        if low < high:
+            pi = self._partition(low, high)
+            self._quickSort(low, pi)
+            self._quickSort(pi + 1, high)
+
+    def _insertionSort(self, low, high):
+        for i in range(low + 1, high + 1):
+            key = self.events[i]
+            j = i - 1
+            while j >= low and self.events[j].start_time > key.start_time:
+                self.events[j + 1] = self.events[j]
+                j -= 1
+            self.events[j + 1] = key
+
+    def _partition(self, low, high):
+        # Hoare partition with median of three pivot
+        mid = (low + high) // 2
+        if self.events[low].start_time > self.events[mid].start_time:
+            self.events[low], self.events[mid] = self.events[mid], self.events[low]
+        if self.events[low].start_time > self.events[high].start_time:
+            self.events[low], self.events[high] = self.events[high], self.events[low]
+        if self.events[mid].start_time > self.events[high].start_time:
+            self.events[mid], self.events[high] = self.events[high], self.events[mid]
+        pivot = self.events[mid].start_time
+        i = low - 1
+        j = high + 1
+        while True:
+            i += 1
+            while self.events[i].start_time < pivot:
+                i += 1
+            j -= 1
+            while self.events[j].start_time > pivot:
+                j -= 1
+            if i >= j:
+                return j
+            self.events[i], self.events[j] = self.events[j], self.events[i]
 
     def binarySearch(self, start_time):
         """Task 6: This function performs a binary search of the events based on a specified start time"""
@@ -146,5 +200,131 @@ class EventManager:
             return current # open slot at the end
 
         return -1 # no open slot otherwise
-    
+
+
+if __name__ == "__main__":
+    # Test with small sample events
+    print("=== Testing with small sample events ===")
+    manager = EventManager()
+    manager.create("Event A", 10, 5, "Work")
+    manager.create("Event B", 5, 3, "Personal")
+    manager.create("Event C", 15, 2, "Work")
+
+    print("Events before sorting:")
+    for event in manager.events:
+        print(f"Name: {event.name}, Start Time: {event.start_time}")
+
+    # Test insertion sort
+    manager_insertion = EventManager()
+    manager_insertion.events = copy.deepcopy(manager.events)
+    start_time = time.time()
+    manager_insertion.insertionSort()
+    insertion_time = time.time() - start_time
+    print(f"\nInsertion sort time: {insertion_time:.6f} seconds")
+
+    # Test bubble sort
+    manager_bubble = EventManager()
+    manager_bubble.events = copy.deepcopy(manager.events)
+    start_time = time.time()
+    manager_bubble.bubbleSort()
+    bubble_time = time.time() - start_time
+    print(f"Bubble sort time: {bubble_time:.6f} seconds")
+
+    # Test quick sort
+    manager_quick = EventManager()
+    manager_quick.events = copy.deepcopy(manager.events)
+    start_time = time.time()
+    manager_quick.quickSort()
+    quick_time = time.time() - start_time
+    print(f"Quick sort time: {quick_time:.6f} seconds")
+
+    print(f"Comparison: Insertion sort: {insertion_time:.6f}s, Bubble sort: {bubble_time:.6f}s, Quick sort: {quick_time:.6f}s")
+    if insertion_time < bubble_time and insertion_time < quick_time:
+        print("Insertion sort is fastest.")
+    elif bubble_time < insertion_time and bubble_time < quick_time:
+        print("Bubble sort is fastest.")
+    elif quick_time < insertion_time and quick_time < bubble_time:
+        print("Quick sort is fastest.")
+    else:
+        print("All sorts have similar performance.")
+
+    # Test with events_small.txt
+    print("\n=== Testing with events_small.txt (10 events) ===")
+    manager_small = EventManager()
+    manager_small.loadFromFile("events_small.txt")
+    print(f"Loaded {len(manager_small.events)} events.")
+
+    # Test insertion sort on small file
+    manager_insertion_small = EventManager()
+    manager_insertion_small.events = copy.deepcopy(manager_small.events)
+    start_time = time.time()
+    manager_insertion_small.insertionSort()
+    insertion_time_small = time.time() - start_time
+    print(f"Insertion sort time: {insertion_time_small:.6f} seconds")
+
+    # Test bubble sort on small file
+    manager_bubble_small = EventManager()
+    manager_bubble_small.events = copy.deepcopy(manager_small.events)
+    start_time = time.time()
+    manager_bubble_small.bubbleSort()
+    bubble_time_small = time.time() - start_time
+    print(f"Bubble sort time: {bubble_time_small:.6f} seconds")
+
+    # Test quick sort on small file
+    manager_quick_small = EventManager()
+    manager_quick_small.events = copy.deepcopy(manager_small.events)
+    start_time = time.time()
+    manager_quick_small.quickSort()
+    quick_time_small = time.time() - start_time
+    print(f"Quick sort time: {quick_time_small:.6f} seconds")
+
+    print(f"Comparison: Insertion sort: {insertion_time_small:.6f}s, Bubble sort: {bubble_time_small:.6f}s, Quick sort: {quick_time_small:.6f}s")
+    if insertion_time_small < bubble_time_small and insertion_time_small < quick_time_small:
+        print("Insertion sort is fastest.")
+    elif bubble_time_small < insertion_time_small and bubble_time_small < quick_time_small:
+        print("Bubble sort is fastest.")
+    elif quick_time_small < insertion_time_small and quick_time_small < bubble_time_small:
+        print("Quick sort is fastest.")
+    else:
+        print("All sorts have similar performance.")
+
+    # Test with events_large.txt
+    print("\n=== Testing with events_large.txt (10000 events) ===")
+    manager_large = EventManager()
+    manager_large.loadFromFile("events_large.txt")
+    print(f"Loaded {len(manager_large.events)} events.")
+
+    # Test insertion sort on large file
+    manager_insertion_large = EventManager()
+    manager_insertion_large.events = copy.deepcopy(manager_large.events)
+    start_time = time.time()
+    manager_insertion_large.insertionSort()
+    insertion_time_large = time.time() - start_time
+    print(f"Insertion sort time: {insertion_time_large:.6f} seconds")
+
+    # Test bubble sort on large file
+    manager_bubble_large = EventManager()
+    manager_bubble_large.events = copy.deepcopy(manager_large.events)
+    start_time = time.time()
+    manager_bubble_large.bubbleSort()
+    bubble_time_large = time.time() - start_time
+    print(f"Bubble sort time: {bubble_time_large:.6f} seconds")
+
+    # Test quick sort on large file
+    manager_quick_large = EventManager()
+    manager_quick_large.events = copy.deepcopy(manager_large.events)
+    start_time = time.time()
+    manager_quick_large.quickSort()
+    quick_time_large = time.time() - start_time
+    print(f"Quick sort time: {quick_time_large:.6f} seconds")
+
+    print(f"Comparison: Insertion sort: {insertion_time_large:.6f}s, Bubble sort: {bubble_time_large:.6f}s, Quick sort: {quick_time_large:.6f}s")
+    if insertion_time_large < bubble_time_large and insertion_time_large < quick_time_large:
+        print("Insertion sort is fastest.")
+    elif bubble_time_large < insertion_time_large and bubble_time_large < quick_time_large:
+        print("Bubble sort is fastest.")
+    elif quick_time_large < insertion_time_large and quick_time_large < bubble_time_large:
+        print("Quick sort is fastest.")
+    else:
+        print("All sorts have similar performance.")
 
