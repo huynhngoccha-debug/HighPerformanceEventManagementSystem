@@ -1,0 +1,10 @@
+Faculty Meeting 1,52,30,Meeting
+Course Lecture 2,85,30,Lecture
+Faculty Meeting 3,378,40,Meeting
+Conference Talk 4,561,36,Lecture
+Faculty Meeting 5,685,22,Meeting
+Project Deadline 6,836,54,Deadline
+Gym Session 7,957,22,Personal
+Course Lecture 8,1120,16,Lecture
+TA Meeting 9,1256,9,Meeting
+Midterm Review 10,1312,17,Lecture

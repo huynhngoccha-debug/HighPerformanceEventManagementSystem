@@ -1,0 +1,50 @@
+Midterm Review 1,141,47,Lecture
+System Maintenance 2,259,62,Deadline
+Data Analysis Session 3,525,68,Lecture
+Research Discussion 4,794,35,Meeting
+Research Discussion 5,1005,15,Meeting
+Midterm Review 6,1128,12,Lecture
+Budget Review 7,1226,19,Meeting
+Weekly Planning 8,1387,68,Meeting
+Workshop 9,1668,59,Lecture
+Student Advising 10,1919,54,Lecture
+Project Deadline 11,2185,15,Deadline
+Conference Talk 12,2332,11,Lecture
+Networking Event 13,2488,61,Personal
+Doctor Appointment 14,2654,38,Personal
+Gym Session 15,2781,45,Personal
+Paper Submission 16,2891,34,Deadline
+Project Deadline 17,3021,33,Deadline
+Student Advising 18,3209,65,Lecture
+TA Meeting 19,3472,41,Meeting
+Conference Talk 20,3689,57,Lecture
+Faculty Meeting 21,3875,46,Meeting
+Midterm Review 22,4013,53,Lecture
+Budget Review 23,4255,29,Meeting
+Doctor Appointment 24,4465,31,Personal
+Budget Review 25,4629,53,Meeting
+Budget Review 26,4792,54,Meeting
+Weekly Planning 27,5061,31,Meeting
+Networking Event 28,5276,46,Personal
+Weekly Planning 29,5395,9,Meeting
+Team Sync 30,5511,9,Meeting
+Networking Event 31,5618,22,Personal
+Project Deadline 32,5717,37,Deadline
+TA Meeting 33,5907,49,Meeting
+Gym Session 34,6078,31,Personal
+Networking Event 35,6172,15,Personal
+TA Meeting 36,6338,43,Meeting
+System Maintenance 37,6442,14,Deadline
+Faculty Meeting 38,6496,54,Meeting
+Doctor Appointment 39,6747,39,Personal
+Weekly Planning 40,6946,68,Meeting
+Team Sync 41,7229,56,Meeting
+Lunch with Colleague 42,7431,45,Personal
+TA Meeting 43,7600,67,Meeting
+Workshop 44,7880,59,Lecture
+Networking Event 45,8014,67,Personal
+Conference Talk 46,8304,62,Lecture
+Office Hours 47,8584,18,Lecture
+Data Analysis Session 48,8664,22,Lecture
+Office Hours 49,8829,40,Lecture
+Doctor Appointment 50,9042,24,Personal
